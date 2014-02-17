@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>xssFilter Example For Browser-End</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        pre{
+            background: #eee;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            line-height: 1.4em;
+        }
+    </style>
+</head>
+<body>
+<h3 class="red">xssFilter</h3>
+Testing Html String:<br>
+<pre id="source">
+    <!--
+    <div class="like" ondblclick="takeme()" onselect="mousedown()">
+        <div class="title">title</div>
+        <div class="desc" onsubmit="load()">desc</div>
+        <div>just</div>
+        <style type="text">
+            .red{color: #f00}
+        </style>
+        <script>alert(88)</script>
+    </div>
+    -->
+</pre>
+===================================<br>
+Result:<br>
+<pre id="preview"></pre>
+<script src="../xssFilter.js"></script>
+<script>
+    var testHTML = '<div class="like" ondblclick="takeme()" onselect="mousedown()">\n' +
+                '\t<div class="title">title</div>\n' +
+                '\t<div class="desc" onsubmit="load()">desc</div>\n' +
+                '\t<div>just</div>\n' +
+                '\t<style type="text">\n' +
+                '\t\t.red{color: #f00}\n' +
+                '\t</style>\n' +
+                '\t<script>alert(88)<\/script>\n' +
+        '</div>';
+
+    var source = document.getElementById('source');
+    //var testHTML = source.innerHTML;
+    var preview = document.getElementById('preview');
+
+    source.innerHTML = testHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    var candy = xssFilter.filter(testHTML);
+    preview.innerHTML = candy.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+</script>
+</body>
+</html>

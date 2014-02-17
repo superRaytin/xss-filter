@@ -1,0 +1,26 @@
+{
+  "name": "xssFilter",
+  "version": "0.1.0",
+  "description": "A XSS Filter For Javascript",
+  "main": "xssFilter.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superRaytin/xssFilter"
+  },
+  "keywords": [
+    "xssFilter",
+    "xss"
+  ],
+  "author": "superRaytin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/superRaytin/xssFilter/issues"
+  },
+  "homepage": "https://github.com/superRaytin/xssFilter"
+}

@@ -1,4 +1,6 @@
-node-xssFilter
+# xssFilter
 ==============
 
-Node平台XSS过滤器
+> A XSS Filter For Javascript
+
+# Usage
