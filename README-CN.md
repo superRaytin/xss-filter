@@ -26,6 +26,8 @@ XSS脚本过滤器，支持浏览器、Node.js、Sea.js、RequireJS等环境中�
 </div>
 ```
 
+[API 文档](https://github.com/superRaytin/xssFilter/wiki/API%E6%96%87%E6%A1%A3)
+
 # 使用
 
 ### Node.js
@@ -37,7 +39,7 @@ npm install xssFilter
 
 example.js
 
-```
+```javascript
 var xssFilter = require('xssFilter');
 var xss = new xssFilter();
 
@@ -52,21 +54,18 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 #### 标准
 
-```
+```javascript
 <script src="./build/xssFilter.js"></script>
 <script>
     var xss = new xssFilter();
-
-    // "<" to &lt; ">" to &gt;
-    xss.options('escape', true);
-
-    var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+    var output = xss.filter('some HTML content include XSS code');
+    // ...
 </script>
 ```
 
 #### 通过Seajs调用
 
-```
+```javascript
 <script src="sea.js"></script>
 <script>
     seajs.use('./build/xssFilter.js', function(xssFilter){
@@ -79,7 +78,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 #### 通过requireJS调用
 
-```
+```javascript
 <script src="require.js"></script>
 <script>
     var xssFilter = require('./build/xssFilter.js');

@@ -1,3 +1,5 @@
+[中文](https://github.com/superRaytin/xssFilter/blob/master/README.md)
+
 # XSSFilter
 
 A XSS Filter, support for Node.js, browser, Sea.js, Require.js.
@@ -27,6 +29,8 @@ Result：
 </div>
 ```
 
+see [API Documentation](https://github.com/superRaytin/xssFilter/wiki/API-Documentation)
+
 # Usage
 
 ### Node.js
@@ -38,7 +42,7 @@ npm install xssFilter
 
 example.js
 
-```
+```javascript
 var xssFilter = require('xssFilter');
 var xss = new xssFilter();
 
@@ -53,23 +57,28 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 #### Normal
 
-```
+```javascript
 <script src="./build/xssFilter.js"></script>
 <script>
     var xss = new xssFilter();
-
-    // "<" to &lt; ">" to &gt;
-    xss.options('escape', true);
-
     var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+    // ...
 </script>
 ```
 
 #### Use with sea.js
 
-```
+```javascript
 <script src="sea.js"></script>
 <script>
+    /*
+    seajs.config({
+        alias: {
+            'xssFilter': './build/xssFilter.js'
+        }
+    });
+    */
+
     seajs.use('./build/xssFilter.js', function(xssFilter){
         var xss = new xssFilter();
         var output = xss.filter('some HTML content include XSS code');
@@ -80,7 +89,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 #### Use with require.js
 
-```
+```javascript
 <script src="require.js"></script>
 <script>
     var xssFilter = require('./build/xssFilter.js');
