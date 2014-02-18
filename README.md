@@ -1,4 +1,4 @@
-[中文](https://github.com/superRaytin/xssFilter/blob/master/README.md)
+[中文](https://github.com/superRaytin/xssFilter/blob/master/README-CN.md)
 
 # XSSFilter
 
