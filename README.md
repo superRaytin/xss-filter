@@ -5,26 +5,26 @@ A XSS Filter, support for Node.js, browser, Sea.js, Require.js.
 Testing HTML String：
 
 ```
-&lt;div class="like" ondblclick="takeme()" onmousedown="mousedown()"&gt;
-	&lt;div class="title"&gt;title&lt;/div&gt;
-	&lt;div class="desc" onsubmit="load()"&gt;desc&lt;/div&gt;
-	&lt;div&gt;just&lt;/div&gt;
-	&lt;style type="text"&gt;
+<div class="like" ondblclick="takeme()" onmousedown="mousedown()">
+	<div class="title">title</div>
+	<div class="desc" onsubmit="load()">desc</div>
+	<div>just</div>
+	<style type="text">
 		.red{color: #f00}
-	&lt;/style&gt;
-	&lt;script&gt;alert(88)&lt;/script&gt;
-&lt;/div&gt;
-&lt;script&gt;alert(99)&lt;/script&gt;
+	</style>
+	<script>alert(88)</script>
+</div>
+<script>alert(99)</script>
 ```
 
 Result：
 
 ```
-&lt;div class="like"&gt;
-	&lt;div class="title"&gt;title&lt;/div&gt;
-	&lt;div class="desc"&gt;desc&lt;/div&gt;
-	&lt;div&gt;just&lt;/div&gt;
-&lt;/div&gt;
+<div class="like">
+	<div class="title">title</div>
+	<div class="desc">desc</div>
+	<div>just</div>
+</div>
 ```
 
 # Usage
