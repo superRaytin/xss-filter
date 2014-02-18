@@ -1,8 +1,7 @@
 # XSSFilter
+XSS脚本过滤器，支持浏览器、Node.js、Sea.js、RequireJS等环境中使用。
 
-A XSS Filter, support for Node.js, browser, Sea.js, Require.js.
-
-Testing HTML String：
+测试HTML：
 `
 <div class="like" ondblclick="takeme()" onmousedown="mousedown()">
 	<div class="title">title</div>
@@ -16,7 +15,7 @@ Testing HTML String：
 <script>alert(99)</script>
 `
 
-Result：
+处理之后：
 
 `
 <div class="like">
@@ -26,10 +25,10 @@ Result：
 </div>
 `
 
-# Usage
+# 使用
 
 ### Node.js
-install xssFilter by `npm`：
+通过 `npm` 安装xssFilter：
 
 `
 npm install xssFilter
@@ -49,7 +48,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 ### Browser
 
-#### Normal
+#### 标准
 `
 <script src="./build/xssFilter.js"></script>
 <script>
@@ -62,7 +61,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 </script>
 `
 
-#### Use with sea.js
+#### 通过Seajs调用
 `
 <script src="sea.js"></script>
 <script>
@@ -74,7 +73,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 </script>
 `
 
-#### Use with require.js
+#### 通过requireJS调用
 `
 <script src="require.js"></script>
 <script>

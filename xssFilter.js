@@ -1,36 +1,18 @@
-(function(){
-    var xssFilter = function(){};
+/*
+ * xssFilter
+ * https://github.com/superRaytin/xssFilter
+ *
+ * Copyright 2014, SuperRaytin
+ * Released under the MIT license.
+ */
 
+(function(global){
+    // RegExp
     var REGEXP_LABEL_STYLE = /<style[^>]*>[^<]*<\/style>/mgi;
     var REGEXP_LABEL_SCRIPT = /<script[^>]*>[^<]*<\/script>/mgi;
-    //var REGEXP_ATTRIBUTE = /<\w+[^ ]( ([^=]+)=(["'])[^\3]+\3)*>/mgi;
     var REGEXP_ATTR = /<\w+[^ ]( ([^=]+)=(["'])[^\3>]+\3)+>/mgi;
 
-    var configOptions = {
-        label_style: true,
-        label_script: true,
-        blackList_attr: {
-            onclick: true,
-            ondblclick: true,
-            onchange: true,
-            onblur: true,
-            onfocus: true,
-            onkeydown: true,
-            onkeypress: true,
-            onkeyup: true,
-            onmousedown: true,
-            onmousemove: true,
-            onmouseover: true,
-            onmouseout: true,
-            onmouseup: true,
-            onselect: true,
-            onsubmit: true,
-            onreset: true,
-            onload: true,
-            onabort: true
-        }
-    };
-
+    // Tools
     var utils = {
         each: function(stack, handler){
             var len = stack.length;
@@ -57,13 +39,92 @@
             });
 
             return result;
+        },
+        isObject: function(obj){
+            return obj === Object(obj);
+        },
+        extend: function(target, obj){
+            utils.each(obj, function(value, key){
+                target[key] = value;
+            });
+        }
+    };
+
+    // constructor
+    function XSSFilter(options){
+        if(utils.isObject(options)){
+            utils.extend(this.config, options);
+        }
+    }
+
+    // Initial Configuration
+    XSSFilter.prototype.config = {
+        // filter style label
+        label_style: true,
+
+        // filter script label
+        label_script: true,
+
+        // Fix Tags
+        fix_tag: true,
+
+        // Escape
+        escape: false,
+
+        blackList_attr: {
+            onclick: true,
+            ondblclick: true,
+            onchange: true,
+            onblur: true,
+            onfocus: true,
+            onkeydown: true,
+            onkeypress: true,
+            onkeyup: true,
+            onmousedown: true,
+            onmousemove: true,
+            onmouseover: true,
+            onmouseout: true,
+            onmouseup: true,
+            onselect: true,
+            onsubmit: true,
+            onreset: true,
+            onload: true,
+            onabort: true
+        }
+    };
+
+    /*
+     * Filter Options Configuration
+     * */
+    XSSFilter.prototype.options = function(name, obj){
+        var args = arguments;
+        var config = this.config;
+
+        if(args.length){
+            if(typeof name === 'string'){
+                if(typeof config[name] === 'undefined'){
+                    throw new Error(name + ' is not a valid configuration name.');
+                    return;
+                }
+
+                if(utils.isObject(obj)){
+                    utils.extend(config[name], obj);
+                }
+                else{
+                    config[name] = obj;
+                }
+            }
+            else if(utils.isObject(name)){
+                obj = name;
+                utils.extend(config, obj);
+            }
         }
     };
 
     /*
      * Filter Attributes in Blacklist
      * */
-    var _filterAttribute = function(html){
+    var _filterAttribute = function(html, config){
         var result = html;
         (function(){
             var attrExec = REGEXP_ATTR.exec(html);
@@ -75,12 +136,9 @@
                 utils.each(attrs, function(item){
                     var itemArray = item.split('=');
                     var attrKey = itemArray[0].toLowerCase();
-                    var reg_replace, matched;
 
-                    if(configOptions.blackList_attr[attrKey]){
-                        reg_replace = new RegExp(attrKey + '=([\'"])[^\\1]+\\1', 'gmi');
-                        matched = labelAttrs.match(reg_replace)[0];
-                        result = result.replace(matched, '');
+                    if(config.blackList_attr[attrKey]){
+                        result = result.replace(item, '');
                     }
                 });
 
@@ -94,48 +152,71 @@
     /*
      * Filter Style Tag
      * */
-    var _filterLabelStyle = function(html){
-        return html.replace(REGEXP_LABEL_STYLE, '');
+    var _filterLabelStyle = function(candy){
+        return candy.replace(REGEXP_LABEL_STYLE, '');
     };
 
     /*
      * Filter Script Tag
      * */
-    var _filterLabelSript = function(html){
-        return html.replace(REGEXP_LABEL_SCRIPT, '');
+    var _filterLabelSript = function(candy){
+        return candy.replace(REGEXP_LABEL_SCRIPT, '');
     };
 
     /*
-     * Filter Options Configuration
-     * */
-    xssFilter.options = function(name, obj){
-        if(!configOptions[name]){
-            console.log(name + ' is not a valid configuration name.');
-            return;
-        }
-
-        if(obj === Object(obj)){
-            utils.each(obj, function(value, key){
-                configOptions[name][key] = obj[name][key];
-            });
-        }
+    * Fix Tags
+    * */
+    var _fixTags = function(candy){
+        return candy.replace(/\t\n/g, '').replace(/['"]\s*>/mg, function(a){
+            return a.replace(/\s+/, '');
+        });
     };
 
-    xssFilter.filter = function(html){
-        var result = html;
+    /*
+     * Escape Tags
+     * */
+    var _escapeTags = function(candy){
+        return candy.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
 
-        result = _filterLabelStyle(result);
-        result = _filterLabelSript(result);
-        result = _filterAttribute(result);
+    XSSFilter.prototype.filter = function(html){
+        var result = html;
+        var config = this.config;
+
+        if(config.label_style){
+            result = _filterLabelStyle(result);
+        }
+
+        if(config.label_script){
+            result = _filterLabelSript(result);
+        }
+
+        result = _filterAttribute(result, config);
+
+        if(config.fix_tag){
+            result = _fixTags(result);
+        }
+
+        if(config.escape){
+            result = _escapeTags(result);
+        }
 
         return result;
     };
 
-    if(typeof module !== 'undefined' && module.exports){
-        module.exports = xssFilter;
+    /*
+    * export via AMD or CommonJS, otherwise leak a global
+    * */
+    if(typeof define === 'function' && (define.amd || define.cmd)){
+        define(function(){
+            return XSSFilter;
+        });
+    }
+    else if(typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
+        module.exports = XSSFilter;
     }
     else{
-        window.xssFilter = xssFilter;
+        global.xssFilter = XSSFilter;
     }
 
-})();
+})(this);

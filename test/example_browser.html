@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
         pre{
-            background: #eee;
+            background: #f8f8f8;
             border: 1px solid #ddd;
             border-radius: 5px;
             padding: 10px;
@@ -19,7 +19,7 @@
 Testing Html String:<br>
 <pre id="source">
     <!--
-    <div class="like" ondblclick="takeme()" onselect="mousedown()">
+    <div class="like" ondblclick="takeme()" onmousedown="mousedown()">
         <div class="title">title</div>
         <div class="desc" onsubmit="load()">desc</div>
         <div>just</div>
@@ -31,11 +31,21 @@ Testing Html String:<br>
     -->
 </pre>
 ===================================<br>
+Code:<br>
+<pre>
+var xss = new xssFilter();
+//xss.options('fix_tag', false);
+xss.options('escape', true); // "<" to &amp;lt; ">" to &amp;gt;
+
+var candy = xss.filter(testHTML);
+preview.innerHTML = candy;
+</pre>
+===================================<br>
 Result:<br>
 <pre id="preview"></pre>
 <script src="../xssFilter.js"></script>
 <script>
-    var testHTML = '<div class="like" ondblclick="takeme()" onselect="mousedown()">\n' +
+    var testHTML = '<div class="like" ondblclick="takeme()" onmousedown="mousedown()">\n' +
                 '\t<div class="title">title</div>\n' +
                 '\t<div class="desc" onsubmit="load()">desc</div>\n' +
                 '\t<div>just</div>\n' +
@@ -43,15 +53,21 @@ Result:<br>
                 '\t\t.red{color: #f00}\n' +
                 '\t</style>\n' +
                 '\t<script>alert(88)<\/script>\n' +
-        '</div>';
+        '</div>\n' +
+        '<script>alert(99)<\/script>';
 
     var source = document.getElementById('source');
-    //var testHTML = source.innerHTML;
     var preview = document.getElementById('preview');
 
     source.innerHTML = testHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    var candy = xssFilter.filter(testHTML);
-    preview.innerHTML = candy.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    var xss = new xssFilter();
+    //xss.options('fix_tag', false);
+    xss.options('escape', true);
+
+    var candy = xss.filter(testHTML);
+    console.log(candy);
+    preview.innerHTML = candy;
 </script>
 </body>
 </html>
