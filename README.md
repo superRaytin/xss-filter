@@ -1,10 +1,9 @@
 [中文](https://github.com/superRaytin/xssFilter/blob/master/README-CN.md)
 
 # XSSFilter
+XSSFilter is an XSS(Cross-Site Script) code filter for Javascript and Node.js. It also work with Sea.js, Require.js. easy to use.
 
-A XSS Filter, support for Node.js, browser, Sea.js, Require.js.
-
-Testing HTML String：
+Testing HTML：
 
 ```
 <div class="like" ondblclick="takeme()" onmousedown="mousedown()">
@@ -29,7 +28,7 @@ Result：
 </div>
 ```
 
-see [API Documentation](https://github.com/superRaytin/xssFilter/wiki/API-Documentation)
+[API Documentation](https://github.com/superRaytin/xssFilter/wiki/API-Documentation)
 
 # Usage
 

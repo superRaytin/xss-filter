@@ -1,5 +1,5 @@
 # XSSFilter
-XSS脚本过滤器，支持浏览器、Node.js、Sea.js、RequireJS等环境中使用。
+XSSFilter是一个Javascript XSS(Cross-Site Script) 代码过滤器，支持Node.js，当然也可以和Sea.js、Require.js等模块加载器协作使用。
 
 测试HTML：
 

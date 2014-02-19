@@ -35,10 +35,9 @@ Code:<br>
 <pre>
 var xss = new xssFilter();
 //xss.options('fix_tag', false);
-xss.options('escape', true); // "<" to &amp;lt; ">" to &amp;gt;
+xss.options('escape', true);
 
 var candy = xss.filter(testHTML);
-preview.innerHTML = candy;
 </pre>
 ===================================<br>
 Result:<br>
@@ -63,7 +62,13 @@ Result:<br>
 
     var xss = new xssFilter();
     //xss.options('fix_tag', false);
-    xss.options('escape', true);
+    //xss.options('escape', true);
+    xss.options({
+        escape: true
+    });
+    xss.options('blackList_attr', {
+        onsubmit: false
+    });
 
     var candy = xss.filter(testHTML);
     console.log(candy);
