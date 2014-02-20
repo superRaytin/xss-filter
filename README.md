@@ -96,6 +96,8 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 ```
 
 # API
+## Manifest
+
 ```javascript
 label_style: true,
 label_script: true,
@@ -130,7 +132,7 @@ blackList_attr: {
 - `blackList_attr` - Property blacklist, Properties in this list will be cleared
 
 ## Initialization
-Accepts only one parameter, pass into a `{}` to override the default configuration，`options` optional.
+Accepts only one parameter, pass into a `{}` to override the default configuration, `options` optional.
 
 ```javascript
 var xss = new xssFilter(options);
@@ -138,12 +140,12 @@ var xss = new xssFilter(options);
 
 ## Methods
 
-### filter(String)
+### filter
 Filtration method, accepts only one parameter.
 
-### options(Object) || options(String, String || Object)
+### options
 
-It's not necessary to pass into configuration object in the initialization，Another approach is use the `options` method:
+It's not necessary to provide an configuration object for initialization, Another approach is use the `options` method:
 
 ```javascript
 var xss = new xssFilter();

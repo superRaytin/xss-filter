@@ -94,6 +94,8 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 ```
 
 # API
+## 配置选项
+
 ```javascript
 label_style: true,
 label_script: true,
@@ -136,10 +138,10 @@ var xss = new xssFilter(options);
 
 ## 方法
 
-### filter(String)
+### filter
 过滤方法，仅接受一个参数
 
-### options(Object) || options(String, String || Object)
+### options
 
 配置除了可以在初始化时传入参数来修改，也可以使用提供的`options`方法：
 
