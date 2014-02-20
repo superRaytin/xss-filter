@@ -180,6 +180,11 @@
     };
 
     XSSFilter.prototype.filter = function(html){
+        if(html == ''){
+            throw new Error('Nothing passed In.');
+            return;
+        }
+
         var result = html;
         var config = this.config;
 
