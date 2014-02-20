@@ -55,11 +55,11 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 #### 标准
 
 ```javascript
-<script src="./build/xssFilter.js"></script>
+<script type="text/javascript" src="./build/xssFilter.js"></script>
 <script>
     var xss = new xssFilter();
-    var output = xss.filter('some HTML content include XSS code');
-    // ...
+    var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+    // output: <div class="like">something...</div>
 </script>
 ```
 
