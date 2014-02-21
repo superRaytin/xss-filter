@@ -8,9 +8,9 @@
 
 (function(global){
     // RegExp
-    var REGEXP_LABEL_STYLE = /<style[^>]*>[^<]*<\/style>/mgi;
-    var REGEXP_LABEL_SCRIPT = /<script[^>]*>[^<]*<\/script>/mgi;
-    var REGEXP_ATTR = /<\w+[^ ]( ([^=]+)=(["'])[^\3>]+\3)+>/mgi;
+    var REGEXP_TAG = /<([a-zA-Z]+)[^>]*>[^<]*<\/\1>/img;
+    var REGEXP_ATTR = /<[a-zA-Z]+( ([^=<]+)=(["'])[^\3>]+\3)+>/img;
+    //var REGEXP_ATTR2 = /([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?/img;
 
     // Tools
     var utils = {
@@ -59,19 +59,21 @@
 
     // Initial Configuration
     XSSFilter.prototype.config = {
-        // filter style label
-        label_style: true,
-
-        // filter script label
-        label_script: true,
-
-        // Fix Tags
-        fix_tag: true,
+        // Beautify Tags
+        beautifyTags: true,
 
         // Escape
         escape: false,
 
-        blackList_attr: {
+        // filter tags
+        blackList_tags: {
+            // filter style label
+            style: true,
+            // filter script label
+            script: true
+        },
+
+        blackList_attrs: {
             onclick: true,
             ondblclick: true,
             onchange: true,
@@ -107,6 +109,11 @@
                     return;
                 }
 
+                if(typeof obj === 'undefined'){
+                    throw new Error('Please enter a value corresponding to the ' + name);
+                    return;
+                }
+
                 if(utils.isObject(obj)){
                     utils.extend(config[name], obj);
                 }
@@ -124,22 +131,79 @@
     /*
      * Filter Attributes in Blacklist
      * */
-    var _filterAttribute = function(html, config){
+    var __filterAttribute = function(html, config){
         var result = html;
+        var tempHTML = html;
+
         (function(){
-            var attrExec = REGEXP_ATTR.exec(html);
+            var attrMatches = REGEXP_ATTR.exec(tempHTML);
 
-            if(attrExec){
-                var labelAttrs = attrExec[1];
+            if(attrMatches){
+                var wholeLabel = attrMatches[0];
+                var labelHasAttr = attrMatches[1];
+
+                tempHTML = tempHTML.replace(labelHasAttr, '');
+
+                //var attrArray = utils.arr_compact(labelHasAttr.split(/\s*=\s*/));
+                var REGEXP_ATTR2 = /([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?/img;
+                //var REGEXP_ATTR3 = /<[a-zA-Z]+\s+([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?>/img;
+                var attrArray = labelHasAttr.match(REGEXP_ATTR2);
+
+                utils.each(attrArray, function(item, i){
+                    var attr = item.split(/\s*=\s*/);
+                    var attrName = attr[0];
+
+                    if(config.blackList_attrs[attrName]){
+                        //result = result.replace(item, '');
+                    }
+                });
+
+                //var trimed = labelAttrs.replace(/\s+=|=\s+/g, '=');
+                console.log(labelAttrs);
+                //console.log(99, trimed);
                 var attrs = utils.arr_compact(labelAttrs.split(/\s+/));
-
-                utils.each(attrs, function(item){
+                utils.each(attrs, function(item, i){
+                    console.log(item);
                     var itemArray = item.split('=');
-                    var attrKey = itemArray[0].toLowerCase();
+                    var attrName = utils.str_trim(itemArray[0].toLowerCase());
 
-                    if(config.blackList_attr[attrKey]){
+
+                    if(config.blackList_attrs[attrKey]){
                         result = result.replace(item, '');
                     }
+
+
+                });
+
+                arguments.callee();
+            }
+
+        })();
+
+        return result;
+    };
+    var _filterAttribute = function(html, config){
+        var result = html;
+        var tempHTML = html;
+
+        (function(){
+            var attrMatches = tempHTML.match(REGEXP_ATTR);
+console.log(attrMatches)
+            if(attrMatches){
+                var labelAttrs = attrMatches[0].replace(/>|</g, '');
+                var trimed = labelAttrs.replace(/\s+=|=\s+/g, '=');
+                console.log(labelAttrs);
+                console.log(99, trimed);
+                var attrs = utils.arr_compact(labelAttrs.split(/\s+/));
+                utils.each(attrs, function(item, i){
+                    console.log(item);
+                    var itemArray = item.split('=');
+                    var attrKey = utils.str_trim(itemArray[0].toLowerCase());
+                    if(config.blackList_attrs[attrKey]){
+                        result = result.replace(item, '');
+                    }
+
+                    tempHTML = tempHTML.replace(item, '');
                 });
 
                 arguments.callee();
@@ -150,24 +214,38 @@
     };
 
     /*
-     * Filter Style Tag
+     * Filter Tags in Blacklist
      * */
-    var _filterLabelStyle = function(candy){
-        return candy.replace(REGEXP_LABEL_STYLE, '');
+    var _filterTags = function(html, config){
+        var result = html;
+        var tempHTML = html;
+
+        (function(){
+            var tagMatches = tempHTML.match(REGEXP_TAG);
+
+            if(tagMatches){
+                utils.each(tagMatches, function(tagBody){
+                    var tagName = tagBody.substring(tagBody.lastIndexOf('<') + 2, tagBody.length - 1);
+
+                    if(config.blackList_tags[tagName]){
+                        result = result.replace(tagBody, '');
+                    }
+
+                    tempHTML = tempHTML.replace(tagBody, '');
+                });
+
+                arguments.callee();
+            }
+        })();
+
+        return result;
     };
 
     /*
-     * Filter Script Tag
-     * */
-    var _filterLabelSript = function(candy){
-        return candy.replace(REGEXP_LABEL_SCRIPT, '');
-    };
-
-    /*
-    * Fix Tags
+    * Beautify Tags
     * */
-    var _fixTags = function(candy){
-        return candy.replace(/\t\n/g, '').replace(/['"]\s*>/mg, function(a){
+    var _BeautifyTags = function(candy){
+        return candy.replace(/\t+\n/g, '').replace(/['"]\s*>/mg, function(a){
             return a.replace(/\s+/, '');
         });
     };
@@ -181,25 +259,18 @@
 
     XSSFilter.prototype.filter = function(html){
         if(html == ''){
-            throw new Error('Nothing passed In.');
             return;
         }
 
         var result = html;
         var config = this.config;
 
-        if(config.label_style){
-            result = _filterLabelStyle(result);
-        }
-
-        if(config.label_script){
-            result = _filterLabelSript(result);
-        }
+        result = _filterTags(result, config);
 
         result = _filterAttribute(result, config);
 
-        if(config.fix_tag){
-            result = _fixTags(result);
+        if(config.beautifyTags){
+            result = _BeautifyTags(result);
         }
 
         if(config.escape){

@@ -125,14 +125,14 @@ blackList_attr: {
 }
 ```
 
-- `label_style` - Whether filter style tags
-- `label_script` - Whether filter script tags
-- `escape` - Whether escape label, `"<" to "&lt;", ">" to "&gt;"`, default no
-- `fix_tag` - Whether landscaping tag, eg: `"<div    >" to "<div>"`
-- `blackList_attr` - Property blacklist, Properties in this list will be cleared
+- `label_style` - filter style tags
+- `label_script` - filter script tags
+- `escape` - escape tags, `"<" to "&lt;", ">" to "&gt;"`, default no
+- `beautifyTags` -beautify tags, eg: `"<div    >" to "<div>"`
+- `blackList_attrs` - Property blacklist, Properties in this list will be cleared
 
 ## Initialization
-Accepts only one parameter, pass into a `{}` to override the default configuration, `options` optional.
+Accepts only one parameter, `options` is optional, if provided, `options` will override the default configuration.
 
 ```javascript
 var xss = new xssFilter(options);
