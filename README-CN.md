@@ -28,14 +28,23 @@ XSSFilter是一个Javascript XSS(Cross-Site Script) 过滤器，支持Node.js，
 
 [API 文档](#api)
 
-# 使用
+# 安装
 
-### Node.js
-通过 `npm` 安装xssFilter：
+### npm
 
 ```
 npm install xssFilter
 ```
+
+### bower
+
+```
+bower install xssFilter
+```
+
+# 使用
+
+### Node.js
 
 example.js
 

@@ -30,14 +30,23 @@ Result：
 
 [API Documentation](#api)
 
-# Usage
+# Install
 
-### Node.js
-install xssFilter by `npm`：
+### npm
 
 ```
 npm install xssFilter
 ```
+
+### bower
+
+```
+bower install xssFilter
+```
+
+# Usage
+
+### Node.js
 
 example.js
 
