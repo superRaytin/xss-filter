@@ -1,5 +1,5 @@
 /*
- * xssFilter
+ * xssFilter 0.1.0
  * https://github.com/superRaytin/xssFilter
  *
  * Copyright 2014, SuperRaytin
