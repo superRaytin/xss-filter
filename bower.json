@@ -1,0 +1,13 @@
+{
+    "name": "xssFilter",
+    "version": "0.1.0",
+    "main": "dist/xssFilter.js",
+    "ignore": [
+        "**/.*",
+        "test",
+        "LICENSE",
+        "component.json",
+        "README*.md",
+        "example.js"
+    ]
+}
