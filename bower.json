@@ -1,12 +1,13 @@
 {
     "name": "xssFilter",
     "version": "0.1.0",
-    "main": "dist/xssFilter.js",
+    "main": "./xssFilter.js",
     "ignore": [
         "**/.*",
         "test",
         "LICENSE",
         "component.json",
+        "package.json",
         "README*.md",
         "example.js"
     ]
