@@ -34,7 +34,6 @@ Testing Html String:<br>
 Code:<br>
 <pre>
 var xss = new xssFilter();
-//xss.options('fix_tag', false);
 xss.options('escape', true);
 
 var candy = xss.filter(testHTML);
@@ -44,23 +43,10 @@ Result:<br>
 <pre id="preview"></pre>
 <script src="../xssFilter.js"></script>
 <script>
-    var testHTML = '<div class ="like" ondblclick= "takeme(); return false" onmousedown="mousedown()">\n' +
-                '\t<div class="title">title</div>\n' +
+    var testHTML = '<div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">\n' +
+                '\t<div class="title" title="I am a title!" value = "big">title</div>\n' +
                 '\t<div class="desc" onsubmit="load()">desc</div>\n' +
-                '\t<div class="what" onsss="aaa">what</div>\n' +
-                '\t<div>just</div>\n' +
-                '\t<div class="some">\n' +
-                    '\t\taaa\n' +
-                    '\t\t<span  class ="aaa">\n' +
-                        '\t\t\t<span class="bbb">bbb</span>\n' +
-                        '\t\t\t<span class="ccc">\n' +
-                            '\t\t\t\t<span class="ddd">ddd</span>\n' +
-                        '\t\t\t</span>\n' +
-                    '\t\t</span>\n' +
-                    '\t\t<span class="eee">\n' +
-                        '\t\t\t<span class="fff">fff</span>\n' +
-                    '\t\t</span>\n' +
-                '\t</div>\n' +
+                '\t<div>just a div</div>\n' +
                 '\t<style type="text">\n' +
                 '\t\t.red{color: #f00}\n' +
                 '\t</style>\n' +
@@ -74,45 +60,14 @@ Result:<br>
     source.innerHTML = testHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
     var xss = new xssFilter();
-    //xss.options('fix_tag', false);
     //xss.options('escape', true);
     xss.options({
         escape: true
     });
 
-    xss.options('blackList_tags', {
-        style: false,
-        script: false
-    });
-
-    xss.options('blackList_attrs', {
-        onsubmit: false,
-        onsss: true,
-        class: true
-    });
-
     var candy = xss.filter(testHTML);
     console.log(candy);
-    console.log(xss.config);
     preview.innerHTML = candy;
-
-    var zz3 = /([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?/img;
-    var REGEXP_ATTR = /<[a-zA-Z]+( ([^=<]+)=(["'])[^\3>]+\3)+>/img;
-    var str3 = ' class ="like" ondblclick= "takeme(); return false" onmousedown="mousedown()" type=yyy noth="" data="dying"\n' +
-                ' onmousedown="mousedown()"';
-    var str4 = '<div class ="like" ondblclick= "takeme(); return false" onmousedown="mousedown()">';
-    console.log(zz3.exec(str3));
-    console.log(REGEXP_ATTR.exec(testHTML));
-
-
-    console.log(str3.match(zz3));
-    console.log(str4.match(zz3));
-
-    zz3.lastIndex = 0;
-    //console.log(zz3.exec(str4));
-    var xx = str4.replace(zz3, function(a, b, c, d, e, f){
-        console.log(a, b, c, d, e, f)
-    });
 
 </script>
 </body>

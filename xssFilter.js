@@ -8,9 +8,10 @@
 
 (function(global){
     // RegExp
-    var REGEXP_TAG = /<([a-zA-Z]+)[^>]*>[^<]*<\/\1>/img;
-    var REGEXP_ATTR = /<[a-zA-Z]+( ([^=<]+)=(["'])[^\3>]+\3)+>/img;
-    //var REGEXP_ATTR2 = /([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?/img;
+    var REGEXP_LABEL_STYLE = /<style[^>]*>[^<]*<\/style>/img;
+    var REGEXP_LABEL_SCRIPT = /<script[^>]*>[^<]*<\/script>/img;
+    var REGEXP_ATTR = /([\w-]+)\s*=\s*("([^"]*)"|'([^']*)'|([^ ]*))/img;
+    var REGEXP_ATTR_LABEL = /<[a-zA-Z]+((\s+([\w-]+)\s*=\s*("([^"]*)"|'([^']*)'|([^ ]*)))+)>/img;
 
     // Tools
     var utils = {
@@ -59,19 +60,17 @@
 
     // Initial Configuration
     XSSFilter.prototype.config = {
+        // filter style label
+        label_style: true,
+
+        // filter script label
+        label_script: true,
+
         // Beautify Tags
         beautifyTags: true,
 
         // Escape
         escape: false,
-
-        // filter tags
-        blackList_tags: {
-            // filter style label
-            style: true,
-            // filter script label
-            script: true
-        },
 
         blackList_attrs: {
             onclick: true,
@@ -131,79 +130,26 @@
     /*
      * Filter Attributes in Blacklist
      * */
-    var __filterAttribute = function(html, config){
-        var result = html;
-        var tempHTML = html;
-
-        (function(){
-            var attrMatches = REGEXP_ATTR.exec(tempHTML);
-
-            if(attrMatches){
-                var wholeLabel = attrMatches[0];
-                var labelHasAttr = attrMatches[1];
-
-                tempHTML = tempHTML.replace(labelHasAttr, '');
-
-                //var attrArray = utils.arr_compact(labelHasAttr.split(/\s*=\s*/));
-                var REGEXP_ATTR2 = /([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?/img;
-                //var REGEXP_ATTR3 = /<[a-zA-Z]+\s+([\w-]+)\s*=\s*(["']?)([^"'= ]*)\2?>/img;
-                var attrArray = labelHasAttr.match(REGEXP_ATTR2);
-
-                utils.each(attrArray, function(item, i){
-                    var attr = item.split(/\s*=\s*/);
-                    var attrName = attr[0];
-
-                    if(config.blackList_attrs[attrName]){
-                        //result = result.replace(item, '');
-                    }
-                });
-
-                //var trimed = labelAttrs.replace(/\s+=|=\s+/g, '=');
-                console.log(labelAttrs);
-                //console.log(99, trimed);
-                var attrs = utils.arr_compact(labelAttrs.split(/\s+/));
-                utils.each(attrs, function(item, i){
-                    console.log(item);
-                    var itemArray = item.split('=');
-                    var attrName = utils.str_trim(itemArray[0].toLowerCase());
-
-
-                    if(config.blackList_attrs[attrKey]){
-                        result = result.replace(item, '');
-                    }
-
-
-                });
-
-                arguments.callee();
-            }
-
-        })();
-
-        return result;
-    };
     var _filterAttribute = function(html, config){
         var result = html;
         var tempHTML = html;
 
         (function(){
-            var attrMatches = tempHTML.match(REGEXP_ATTR);
-console.log(attrMatches)
+            var attrMatches = REGEXP_ATTR_LABEL.exec(tempHTML);
+            REGEXP_ATTR_LABEL.lastIndex = 0;
+
             if(attrMatches){
-                var labelAttrs = attrMatches[0].replace(/>|</g, '');
-                var trimed = labelAttrs.replace(/\s+=|=\s+/g, '=');
-                console.log(labelAttrs);
-                console.log(99, trimed);
-                var attrs = utils.arr_compact(labelAttrs.split(/\s+/));
-                utils.each(attrs, function(item, i){
-                    console.log(item);
-                    var itemArray = item.split('=');
-                    var attrKey = utils.str_trim(itemArray[0].toLowerCase());
-                    if(config.blackList_attrs[attrKey]){
+                var labelHasAttr = attrMatches[1];
+                var attrArray = labelHasAttr.match(REGEXP_ATTR);
+
+                tempHTML = tempHTML.replace(labelHasAttr, '');
+
+                utils.each(attrArray, function(item){
+                    var attrName = utils.str_trim(item.substr(0, item.indexOf('=')));
+
+                    if(config.blackList_attrs[attrName]){
                         result = result.replace(item, '');
                     }
-
-                    tempHTML = tempHTML.replace(item, '');
                 });
 
                 arguments.callee();
@@ -214,38 +160,24 @@ console.log(attrMatches)
     };
 
     /*
-     * Filter Tags in Blacklist
+     * Filter Style Tag
      * */
-    var _filterTags = function(html, config){
-        var result = html;
-        var tempHTML = html;
+    var _filterLabelStyle = function(candy){
+        return candy.replace(REGEXP_LABEL_STYLE, '');
+    };
 
-        (function(){
-            var tagMatches = tempHTML.match(REGEXP_TAG);
-
-            if(tagMatches){
-                utils.each(tagMatches, function(tagBody){
-                    var tagName = tagBody.substring(tagBody.lastIndexOf('<') + 2, tagBody.length - 1);
-
-                    if(config.blackList_tags[tagName]){
-                        result = result.replace(tagBody, '');
-                    }
-
-                    tempHTML = tempHTML.replace(tagBody, '');
-                });
-
-                arguments.callee();
-            }
-        })();
-
-        return result;
+    /*
+     * Filter Script Tag
+     * */
+    var _filterLabelSript = function(candy){
+        return candy.replace(REGEXP_LABEL_SCRIPT, '');
     };
 
     /*
     * Beautify Tags
     * */
-    var _BeautifyTags = function(candy){
-        return candy.replace(/\t+\n/g, '').replace(/['"]\s*>/mg, function(a){
+    var _beautifyTags = function(candy){
+        return candy.replace(/\t+\n/g, '').replace(/\s*>/mg, function(a){
             return a.replace(/\s+/, '');
         });
     };
@@ -265,12 +197,18 @@ console.log(attrMatches)
         var result = html;
         var config = this.config;
 
-        result = _filterTags(result, config);
+        if(config.label_style){
+            result = _filterLabelStyle(result);
+        }
+
+        if(config.label_script){
+            result = _filterLabelSript(result);
+        }
 
         result = _filterAttribute(result, config);
 
         if(config.beautifyTags){
-            result = _BeautifyTags(result);
+            result = _beautifyTags(result);
         }
 
         if(config.escape){

@@ -4,10 +4,10 @@ XSSFilter是一个Javascript XSS(Cross-Site Script) 过滤器，支持Node.js，
 测试HTML：
 
 ```
-<div class="like" ondblclick="takeme()" onmousedown="mousedown()">
-	<div class="title">title</div>
+<div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
+	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc" onsubmit="load()">desc</div>
-	<div>just</div>
+	<div>just a div</div>
 	<style type="text">
 		.red{color: #f00}
 	</style>
@@ -19,10 +19,10 @@ XSSFilter是一个Javascript XSS(Cross-Site Script) 过滤器，支持Node.js，
 处理之后：
 
 ```
-<div class="like">
-	<div class="title">title</div>
+<div class ="like">
+	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc">desc</div>
-	<div>just</div>
+	<div>just a div</div>
 </div>
 ```
 
@@ -100,8 +100,8 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 label_style: true,
 label_script: true,
 escape: false,
-fix_tag: true,
-blackList_attr: {
+beautifyTags: true,
+blackList_attrs: {
     onclick: true,
     ondblclick: true,
     onchange: true,
@@ -126,8 +126,8 @@ blackList_attr: {
 - `label_style` - 是否过滤style标签
 - `label_script` - 是否过滤script标签
 - `escape` - 是否对标签进行转义, `"<" to "&lt;", ">" to "&gt;"`，默认不转义
-- `fix_tag` - 是否美化标签, eg: `"<div    >" to "<div>"`
-- `blackList_attr` - 属性黑名单, 在此名单上的属性将被清除
+- `beautifyTags` - 是否美化标签, eg: `"<div    >" to "<div>"`
+- `blackList_attrs` - 属性黑名单, 在此名单上的属性将被清除
 
 ## 初始化
 最多支持一个参数，传进对象字面量，覆盖默认配置，`options` 可选
@@ -162,13 +162,13 @@ xss.options('escape', true);
 var output = xss.filter('some html...');
 ```
 
-对于二级配置比如`blackList_attr`，第二个参数必须是一个`{}`对象
+对于二级配置比如`blackList_attrs`，第二个参数必须是一个`{}`对象
 
 比如下面这段代码作用是，不对`onsubmit`属性进行过滤
 
 ```javascript
 var xss = new xssFilter();
-xss.options('blackList_attr', {
+xss.options('blackList_attrs', {
     onsubmit: false
 });
 var output = xss.filter('some html...');

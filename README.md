@@ -6,10 +6,10 @@ XSSFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It als
 Testing HTML：
 
 ```
-<div class="like" ondblclick="takeme()" onmousedown="mousedown()">
-	<div class="title">title</div>
+<div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
+	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc" onsubmit="load()">desc</div>
-	<div>just</div>
+	<div>just a div</div>
 	<style type="text">
 		.red{color: #f00}
 	</style>
@@ -21,10 +21,10 @@ Testing HTML：
 Result：
 
 ```
-<div class="like">
-	<div class="title">title</div>
+<div class ="like">
+	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc">desc</div>
-	<div>just</div>
+	<div>just a div</div>
 </div>
 ```
 
@@ -102,8 +102,8 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 label_style: true,
 label_script: true,
 escape: false,
-fix_tag: true,
-blackList_attr: {
+beautifyTags: true,
+blackList_attrs: {
     onclick: true,
     ondblclick: true,
     onchange: true,
@@ -164,13 +164,13 @@ xss.options('escape', true);
 var output = xss.filter('some html...');
 ```
 
-the second argument must be an object `{}` such as `blackList_attr`
+the second argument must be an object `{}` such as `blackList_attrs`
 
 For example, I dont want to filter the 'onsubmit' property, wrote like this:
 
 ```javascript
 var xss = new xssFilter();
-xss.options('blackList_attr', {
+xss.options('blackList_attrs', {
     onsubmit: false
 });
 var output = xss.filter('some html...');
