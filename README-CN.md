@@ -53,7 +53,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 ### Browser
 
 ```javascript
-<script src="./build/xssFilter.js"></script>
+<script src="./dist/xssFilter.js"></script>
 <script>
     var xss = new xssFilter();
     var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
@@ -69,11 +69,11 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
     /*
     seajs.config({
         alias: {
-            'xssFilter': './build/xssFilter.js'
+            'xssFilter': './dist/xssFilter.js'
         }
     });
     */
-    seajs.use('./build/xssFilter.js', function(xssFilter){
+    seajs.use('./dist/xssFilter.js', function(xssFilter){
         var xss = new xssFilter();
         var output = xss.filter('some HTML content include XSS code');
         // ...
@@ -86,7 +86,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 ```javascript
 <script src="require.js"></script>
 <script>
-    var xssFilter = require('./build/xssFilter.js');
+    var xssFilter = require('./dist/xssFilter.js');
     var xss = new xssFilter();
     var output = xss.filter('some HTML content include XSS code');
     // ...
