@@ -6,4 +6,4 @@
 # information for Eclipse / Flash Builder.
 
 node_modules/
-npm-debug.txt
+npm-debug.log
