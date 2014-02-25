@@ -1,5 +1,5 @@
 {
-  "name": "xssFilter",
+  "name": "xssfilter",
   "version": "0.1.0",
   "description": "A XSS Filter For Javascript",
   "main": "xssFilter.js",

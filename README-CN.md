@@ -33,7 +33,7 @@ XSSFilter是一个Javascript XSS(Cross-Site Script) 过滤器，支持Node.js，
 ### npm
 
 ```
-npm install xssFilter
+npm install xssfilter
 ```
 
 ### bower
@@ -49,7 +49,7 @@ bower install xssFilter
 example.js
 
 ```javascript
-var xssFilter = require('xssFilter');
+var xssFilter = require('xssfilter');
 var xss = new xssFilter();
 
 // "<" to &lt; ">" to &gt;

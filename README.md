@@ -35,7 +35,7 @@ Result：
 ### npm
 
 ```
-npm install xssFilter
+npm install xssfilter
 ```
 
 ### bower
@@ -51,7 +51,7 @@ bower install xssFilter
 example.js
 
 ```javascript
-var xssFilter = require('xssFilter');
+var xssFilter = require('xssfilter');
 var xss = new xssFilter();
 
 // "<" to &lt; ">" to &gt;
