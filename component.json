@@ -1,6 +1,6 @@
 {
     "name": "xssFilter",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "repo": "superRaytin/xssFilter",
     "description": "A XSS Filter For Javascript",
     "keywords": [
