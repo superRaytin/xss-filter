@@ -128,7 +128,8 @@ blackList_attrs: {
     onsubmit: true,
     onreset: true,
     onload: true,
-    onabort: true
+    onabort: true,
+    onerror: true
 }
 ```
 
