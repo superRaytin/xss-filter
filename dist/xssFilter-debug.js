@@ -56,43 +56,44 @@
         if(utils.isObject(options)){
             utils.extend(this.config, options);
         }
+
+        // Initial Configuration
+        this.config = {
+            // filter style label
+            label_style: true,
+
+            // filter script label
+            label_script: true,
+
+            // Beautify Tags
+            beautifyTags: true,
+
+            // Escape
+            escape: false,
+
+            blackList_attrs: {
+                onclick: true,
+                ondblclick: true,
+                onchange: true,
+                onblur: true,
+                onfocus: true,
+                onkeydown: true,
+                onkeypress: true,
+                onkeyup: true,
+                onmousedown: true,
+                onmousemove: true,
+                onmouseover: true,
+                onmouseout: true,
+                onmouseup: true,
+                onselect: true,
+                onsubmit: true,
+                onreset: true,
+                onload: true,
+                onabort: true,
+                onerror: true
+            }
+        };
     }
-
-    // Initial Configuration
-    XSSFilter.prototype.config = {
-        // filter style label
-        label_style: true,
-
-        // filter script label
-        label_script: true,
-
-        // Beautify Tags
-        beautifyTags: true,
-
-        // Escape
-        escape: false,
-
-        blackList_attrs: {
-            onclick: true,
-            ondblclick: true,
-            onchange: true,
-            onblur: true,
-            onfocus: true,
-            onkeydown: true,
-            onkeypress: true,
-            onkeyup: true,
-            onmousedown: true,
-            onmousemove: true,
-            onmouseover: true,
-            onmouseout: true,
-            onmouseup: true,
-            onselect: true,
-            onsubmit: true,
-            onreset: true,
-            onload: true,
-            onabort: true
-        }
-    };
 
     /*
      * Filter Options Configuration
