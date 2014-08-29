@@ -1,5 +1,5 @@
 /*
- * xssFilter 0.1.0
+ * xssFilter 0.1.1
  * A XSS Filter For Javascript
  * https://github.com/superRaytin/xssFilter
  *
