@@ -54,10 +54,6 @@
 
     // constructor
     function XSSFilter(options){
-        if(utils.isObject(options)){
-            utils.extend(this.config, options);
-        }
-
         // Initial Configuration
         this.config = {
             // filter style label
@@ -94,6 +90,10 @@
                 onerror: true
             }
         };
+
+        if(utils.isObject(options)){
+            utils.extend(this.config, options);
+        }
     }
 
     /*
