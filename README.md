@@ -3,7 +3,7 @@
 # XSSFilter
 XSSFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It also work with Sea.js, Require.js. easy to use.
 
-Testing HTML：
+Test HTML Content：
 
 ```
 <div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
