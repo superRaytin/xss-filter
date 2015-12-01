@@ -1,4 +1,4 @@
-var xssFilter = require('./dist/xssFilter');
+var xssFilter = require('../lib/index');
 
 var testHTML =  '<div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">\n' +
                     '\t<div class="title" title="I am a title!" value = "big">title</div>\n' +
@@ -11,8 +11,8 @@ var testHTML =  '<div class ="like" ondblclick= "ondblclick(); return false;" on
                 '</div>\n' +
                 '<script>alert(99)<\/script>';
 
-var xss = new xssFilter();
-var candy = xss.filter(testHTML);
+var xssfilter = new xssFilter();
+var candy = xssfilter.filter(testHTML);
 
 console.log('================== testing HTML ==================')
 console.log(testHTML);
