@@ -1,5 +1,5 @@
 # xssFilter
-xssFilter 是一个 Javascript XSS(Cross-Site Script) 过滤器，支持 Node.js，当然也可以和 Sea.js、Require.js 等模块加载器协作使用。
+> xssFilter 是一个 Javascript XSS(Cross-Site Script) 过滤器，支持 Node.js，当然也可以和 [Require.js](http://requirejs.org/) 和 [Sea.js](http://seajs.org/) 等模块加载器协作使用。
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
@@ -60,12 +60,12 @@ example.js
 
 ```js
 var xssFilter = require('xssfilter');
-var xss = new xssFilter();
+var xssfilter = new xssFilter();
 
 // "<" to &lt; ">" to &gt;
-xss.options('escape', true);
+xssfilter.options('escape', true);
 
-var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
 // output: &lt;div class="like"&gt;something...&lt;/div&gt;
 ```
 
@@ -74,9 +74,22 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 ```js
 <script src="./dist/xssFilter.js"></script>
 <script>
-    var xss = new xssFilter();
-    var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+    var xssfilter = new xssFilter();
+    var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
     // output: <div class="like">something...</div>
+</script>
+```
+
+#### 通过 Require.js 调用
+
+```js
+<script src="require.js"></script>
+<script>
+    var xssFilter = require('./dist/xssFilter.js');
+    var xssfilter = new xssFilter();
+
+    var output = xssfilter.filter('some HTML content include XSS code');
+    // ...
 </script>
 ```
 
@@ -93,23 +106,10 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
     });
     */
     seajs.use('./dist/xssFilter.js', function(xssFilter){
-        var xss = new xssFilter();
-        var output = xss.filter('some HTML content include XSS code');
+        var xssfilter = new xssFilter();
+        var output = xssfilter.filter('some HTML content include XSS code');
         // ...
     })
-</script>
-```
-
-#### 通过 Require.js 调用
-
-```js
-<script src="require.js"></script>
-<script>
-    var xssFilter = require('./dist/xssFilter.js');
-    var xss = new xssFilter();
-
-    var output = xss.filter('some HTML content include XSS code');
-    // ...
 </script>
 ```
 
@@ -154,7 +154,7 @@ blackList_attrs: {
 最多支持一个参数，传进对象字面量，覆盖默认配置，`options` 可选
 
 ```js
-var xss = new xssFilter(options);
+var xssfilter = new xssFilter(options);
 ```
 
 ## 方法
@@ -167,22 +167,22 @@ var xss = new xssFilter(options);
 配置除了可以在初始化时传入参数来修改，也可以使用提供的 `options` 方法：
 
 ```js
-var xss = new xssFilter();
+var xssfilter = new xssFilter();
 
-xss.options({
+xssfilter.options({
     escape: true,
     label_style: false
 });
 
-var output = xss.filter('some html...');
+var output = xssfilter.filter('some html...');
 ```
 
 也可以针对单个进行配置，下面这段代码输出的 HTML 中标签将会被转义
 
 ```js
-var xss = new xssFilter();
-xss.options('escape', true);
-var output = xss.filter('some html...');
+var xssfilter = new xssFilter();
+xssfilter.options('escape', true);
+var output = xssfilter.filter('some html...');
 ```
 
 对于二级配置比如 `blackList_attrs`，第二个参数必须是一个 `{}` 对象
@@ -190,13 +190,13 @@ var output = xss.filter('some html...');
 比如下面这段代码作用是，不对`onsubmit`属性进行过滤
 
 ```js
-var xss = new xssFilter();
+var xssfilter = new xssFilter();
 
-xss.options('blackList_attrs', {
+xssfilter.options('blackList_attrs', {
     onsubmit: false
 });
 
-var output = xss.filter('some html...');
+var output = xssfilter.filter('some html...');
 ```
 
 # License

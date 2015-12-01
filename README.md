@@ -1,5 +1,5 @@
 # xssFilter
-xssFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It also work with Sea.js, Require.js. easy to use.
+> xssFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It also work with [Require.js](http://requirejs.org/) and [Sea.js](http://seajs.org/). easy to use.
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
@@ -62,12 +62,12 @@ example.js
 
 ```js
 var xssFilter = require('xssfilter');
-var xss = new xssFilter();
+var xssfilter = new xssFilter();
 
 // "<" to &lt; ">" to &gt;
-xss.options('escape', true);
+xssfilter.options('escape', true);
 
-var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
 // output: &lt;div class="like"&gt;something...&lt;/div&gt;
 ```
 
@@ -76,9 +76,21 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 ```js
 <script src="./dist/xssFilter.js"></script>
 <script>
-    var xss = new xssFilter();
-    var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+    var xssfilter = new xssFilter();
+    var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
     // output: <div class="like">something...</div>
+</script>
+```
+
+#### Use with require.js
+
+```js
+<script src="require.js"></script>
+<script>
+    var xssFilter = require('./dist/xssFilter.js');
+    var xssfilter = new xssFilter();
+    var output = xssfilter.filter('some HTML content include XSS code');
+    // ...
 </script>
 ```
 
@@ -95,22 +107,10 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
     });
     */
     seajs.use('./dist/xssFilter.js', function(xssFilter){
-        var xss = new xssFilter();
-        var output = xss.filter('some HTML content include XSS code');
+        var xssfilter = new xssFilter();
+        var output = xssfilter.filter('some HTML content include XSS code');
         // ...
     })
-</script>
-```
-
-#### Use with require.js
-
-```js
-<script src="require.js"></script>
-<script>
-    var xssFilter = require('./dist/xssFilter.js');
-    var xss = new xssFilter();
-    var output = xss.filter('some HTML content include XSS code');
-    // ...
 </script>
 ```
 
@@ -155,7 +155,7 @@ blackList_attrs: {
 Accepts only one parameter, `options` is optional, if provided, `options` will override the default configuration.
 
 ```js
-var xss = new xssFilter(options);
+var xssfilter = new xssFilter(options);
 ```
 
 ## Methods
@@ -168,22 +168,22 @@ Filtration method, accepts only one parameter.
 It's not necessary to provide an configuration object for initialization, Another approach is use the `options` method:
 
 ```js
-var xss = new xssFilter();
+var xssfilter = new xssFilter();
 
-xss.options({
+xssfilter.options({
     escape: true,
     label_style: false
 });
 
-var output = xss.filter('some html...');
+var output = xssfilter.filter('some html...');
 ```
 
 You can also modify the single configuration:
 
 ```js
-var xss = new xssFilter();
-xss.options('escape', true);
-var output = xss.filter('some html...');
+var xssfilter = new xssFilter();
+xssfilter.options('escape', true);
+var output = xssfilter.filter('some html...');
 ```
 
 the second argument must be an object `{}` such as `blackList_attrs`
@@ -191,13 +191,13 @@ the second argument must be an object `{}` such as `blackList_attrs`
 For example, I dont want to filter the 'onsubmit' property, wrote like this:
 
 ```js
-var xss = new xssFilter();
+var xssfilter = new xssFilter();
 
-xss.options('blackList_attrs', {
+xssfilter.options('blackList_attrs', {
     onsubmit: false
 });
 
-var output = xss.filter('some html...');
+var output = xssfilter.filter('some html...');
 ```
 
 # License
