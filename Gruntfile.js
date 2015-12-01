@@ -9,7 +9,7 @@ module.exports = function(grunt){
                     ' * <%= pkg.description %>\n' +
                     ' * https://github.com/superRaytin/xssFilter\n' +
                     ' *\n' +
-                    ' * Copyright 2014, SuperRaytin\n' +
+                    ' * Copyright 2014, Leon Shi\n' +
                     ' * Released under the MIT license.\n' +
                     '*/\n\n'
             },
@@ -23,6 +23,7 @@ module.exports = function(grunt){
             }
         }
     });
+
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.registerTask('build', ['uglify']);
 };
