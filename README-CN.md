@@ -1,9 +1,35 @@
-# XSSFilter
-XSSFilter是一个Javascript XSS(Cross-Site Script) 过滤器，支持Node.js，当然也可以和Sea.js、Require.js等模块加载器协作使用。
+# xssFilter
+xssFilter 是一个 Javascript XSS(Cross-Site Script) 过滤器，支持 Node.js，当然也可以和 Sea.js、Require.js 等模块加载器协作使用。
 
-测试HTML：
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
+
+[![xssFilter](https://nodei.co/npm/xssFilter.png)](https://npmjs.org/package/xssFilter)
+
+[npm-url]: https://npmjs.org/package/xssFilter
+[downloads-image]: http://img.shields.io/npm/dm/xssFilter.svg
+[npm-image]: http://img.shields.io/npm/v/xssFilter.svg
+
+[API 文档](#api)
+
+# 安装
+
+### NPM
 
 ```
+$ npm install xssfilter
+```
+
+### Bower
+
+```
+$ bower install xssFilter
+```
+
+# 例子
+
+测试 HTML：
+
+```html
 <div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
 	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc" onsubmit="load()">desc</div>
@@ -18,28 +44,12 @@ XSSFilter是一个Javascript XSS(Cross-Site Script) 过滤器，支持Node.js，
 
 处理之后：
 
-```
+```html
 <div class ="like">
 	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc">desc</div>
 	<div>just a div</div>
 </div>
-```
-
-[API 文档](#api)
-
-# 安装
-
-### npm
-
-```
-npm install xssfilter
-```
-
-### bower
-
-```
-bower install xssFilter
 ```
 
 # 使用
@@ -48,7 +58,7 @@ bower install xssFilter
 
 example.js
 
-```javascript
+```js
 var xssFilter = require('xssfilter');
 var xss = new xssFilter();
 
@@ -61,7 +71,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 ### Browser
 
-```javascript
+```js
 <script src="./dist/xssFilter.js"></script>
 <script>
     var xss = new xssFilter();
@@ -70,9 +80,9 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 </script>
 ```
 
-#### 通过Seajs调用
+#### 通过 Sea.js 调用
 
-```javascript
+```js
 <script src="sea.js"></script>
 <script>
     /*
@@ -90,13 +100,14 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 </script>
 ```
 
-#### 通过requireJS调用
+#### 通过 Require.js 调用
 
-```javascript
+```js
 <script src="require.js"></script>
 <script>
     var xssFilter = require('./dist/xssFilter.js');
     var xss = new xssFilter();
+
     var output = xss.filter('some HTML content include XSS code');
     // ...
 </script>
@@ -105,7 +116,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 # API
 ## 配置选项
 
-```javascript
+```js
 label_style: true,
 label_script: true,
 escape: false,
@@ -142,7 +153,7 @@ blackList_attrs: {
 ## 初始化
 最多支持一个参数，传进对象字面量，覆盖默认配置，`options` 可选
 
-```javascript
+```js
 var xss = new xssFilter(options);
 ```
 
@@ -151,36 +162,40 @@ var xss = new xssFilter(options);
 ### filter
 过滤方法，仅接受一个参数
 
-### options
+### Options
 
-配置除了可以在初始化时传入参数来修改，也可以使用提供的`options`方法：
+配置除了可以在初始化时传入参数来修改，也可以使用提供的 `options` 方法：
 
-```javascript
+```js
 var xss = new xssFilter();
+
 xss.options({
     escape: true,
     label_style: false
 });
+
 var output = xss.filter('some html...');
 ```
 
-也可以针对单个进行配置，下面这段代码输出的HTML中标签将会被转义
+也可以针对单个进行配置，下面这段代码输出的 HTML 中标签将会被转义
 
-```javascript
+```js
 var xss = new xssFilter();
 xss.options('escape', true);
 var output = xss.filter('some html...');
 ```
 
-对于二级配置比如`blackList_attrs`，第二个参数必须是一个`{}`对象
+对于二级配置比如 `blackList_attrs`，第二个参数必须是一个 `{}` 对象
 
 比如下面这段代码作用是，不对`onsubmit`属性进行过滤
 
-```javascript
+```js
 var xss = new xssFilter();
+
 xss.options('blackList_attrs', {
     onsubmit: false
 });
+
 var output = xss.filter('some html...');
 ```
 

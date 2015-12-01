@@ -1,11 +1,37 @@
+# xssFilter
+xssFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It also work with Sea.js, Require.js. easy to use.
+
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
+
+[![xssFilter](https://nodei.co/npm/xssFilter.png)](https://npmjs.org/package/xssFilter)
+
+[npm-url]: https://npmjs.org/package/xssFilter
+[downloads-image]: http://img.shields.io/npm/dm/xssFilter.svg
+[npm-image]: http://img.shields.io/npm/v/xssFilter.svg
+
 [中文](https://github.com/superRaytin/xssFilter/blob/master/README-CN.md)
 
-# XSSFilter
-XSSFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It also work with Sea.js, Require.js. easy to use.
+[API Documentation](#api)
 
-Test HTML Content：
+# Install
+
+### NPM
 
 ```
+$ npm install xssfilter
+```
+
+### Bower
+
+```
+$ bower install xssFilter
+```
+
+# Example
+
+Test HTML Content:
+
+```html
 <div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
 	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc" onsubmit="load()">desc</div>
@@ -20,28 +46,12 @@ Test HTML Content：
 
 Result：
 
-```
+```html
 <div class ="like">
 	<div class="title" title="I am a title!" value = "big">title</div>
 	<div class="desc">desc</div>
 	<div>just a div</div>
 </div>
-```
-
-[API Documentation](#api)
-
-# Install
-
-### npm
-
-```
-npm install xssfilter
-```
-
-### bower
-
-```
-bower install xssFilter
 ```
 
 # Usage
@@ -50,7 +60,7 @@ bower install xssFilter
 
 example.js
 
-```javascript
+```js
 var xssFilter = require('xssfilter');
 var xss = new xssFilter();
 
@@ -63,7 +73,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 ### Browser
 
-```javascript
+```js
 <script src="./dist/xssFilter.js"></script>
 <script>
     var xss = new xssFilter();
@@ -74,7 +84,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 #### Use with sea.js
 
-```javascript
+```js
 <script src="sea.js"></script>
 <script>
     /*
@@ -94,7 +104,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 
 #### Use with require.js
 
-```javascript
+```js
 <script src="require.js"></script>
 <script>
     var xssFilter = require('./dist/xssFilter.js');
@@ -107,7 +117,7 @@ var output = xss.filter('<div class="like" ondblclick="takeme()" onmousedown="mo
 # API
 ## Manifest
 
-```javascript
+```js
 label_style: true,
 label_script: true,
 escape: false,
@@ -144,7 +154,7 @@ blackList_attrs: {
 ## Initialization
 Accepts only one parameter, `options` is optional, if provided, `options` will override the default configuration.
 
-```javascript
+```js
 var xss = new xssFilter(options);
 ```
 
@@ -153,22 +163,24 @@ var xss = new xssFilter(options);
 ### filter
 Filtration method, accepts only one parameter.
 
-### options
+### Options
 
 It's not necessary to provide an configuration object for initialization, Another approach is use the `options` method:
 
-```javascript
+```js
 var xss = new xssFilter();
+
 xss.options({
     escape: true,
     label_style: false
 });
+
 var output = xss.filter('some html...');
 ```
 
 You can also modify the single configuration:
 
-```javascript
+```js
 var xss = new xssFilter();
 xss.options('escape', true);
 var output = xss.filter('some html...');
@@ -178,11 +190,13 @@ the second argument must be an object `{}` such as `blackList_attrs`
 
 For example, I dont want to filter the 'onsubmit' property, wrote like this:
 
-```javascript
+```js
 var xss = new xssFilter();
+
 xss.options('blackList_attrs', {
     onsubmit: false
 });
+
 var output = xss.filter('some html...');
 ```
 
