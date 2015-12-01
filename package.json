@@ -2,12 +2,12 @@
   "name": "xssfilter",
   "version": "0.1.1",
   "description": "A XSS Filter For Javascript",
-  "main": "xssFilter.js",
+  "main": "dist/xssFilter.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha ./test/*.js"
   },
   "repository": {
     "type": "git",
@@ -17,13 +17,15 @@
     "xssFilter",
     "xss"
   ],
-  "author": "superRaytin",
+  "author": "Leon Shi",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/superRaytin/xssFilter/issues"
   },
   "homepage": "https://github.com/superRaytin/xssFilter",
   "devDependencies": {
+    "should": "~6.0.1",
+    "mocha": "~2.2.4",
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.4"
   }
