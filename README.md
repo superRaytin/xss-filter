@@ -3,11 +3,11 @@ xssFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It als
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
-[![xssFilter](https://nodei.co/npm/xssFilter.png)](https://npmjs.org/package/xssFilter)
+[![xssfilter](https://nodei.co/npm/xssfilter.png)](https://npmjs.org/package/xssfilter)
 
-[npm-url]: https://npmjs.org/package/xssFilter
-[downloads-image]: http://img.shields.io/npm/dm/xssFilter.svg
-[npm-image]: http://img.shields.io/npm/v/xssFilter.svg
+[npm-url]: https://npmjs.org/package/xssfilter
+[downloads-image]: http://img.shields.io/npm/dm/xssfilter.svg
+[npm-image]: http://img.shields.io/npm/v/xssfilter.svg
 
 [中文](https://github.com/superRaytin/xssFilter/blob/master/README-CN.md)
 
@@ -163,7 +163,7 @@ var xss = new xssFilter(options);
 ### filter
 Filtration method, accepts only one parameter.
 
-### Options
+### options
 
 It's not necessary to provide an configuration object for initialization, Another approach is use the `options` method:
 

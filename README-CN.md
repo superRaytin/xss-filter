@@ -3,11 +3,11 @@ xssFilter 是一个 Javascript XSS(Cross-Site Script) 过滤器，支持 Node.js
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
-[![xssFilter](https://nodei.co/npm/xssFilter.png)](https://npmjs.org/package/xssFilter)
+[![xssfilter](https://nodei.co/npm/xssfilter.png)](https://npmjs.org/package/xssfilter)
 
-[npm-url]: https://npmjs.org/package/xssFilter
-[downloads-image]: http://img.shields.io/npm/dm/xssFilter.svg
-[npm-image]: http://img.shields.io/npm/v/xssFilter.svg
+[npm-url]: https://npmjs.org/package/xssfilter
+[downloads-image]: http://img.shields.io/npm/dm/xssfilter.svg
+[npm-image]: http://img.shields.io/npm/v/xssfilter.svg
 
 [API 文档](#api)
 
@@ -162,7 +162,7 @@ var xss = new xssFilter(options);
 ### filter
 过滤方法，仅接受一个参数
 
-### Options
+### options
 
 配置除了可以在初始化时传入参数来修改，也可以使用提供的 `options` 方法：
 
