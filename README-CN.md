@@ -1,5 +1,5 @@
 # xssFilter
-> xssFilter 是一个 Javascript XSS(Cross-Site Script) 过滤器，支持 Node.js，当然也可以和 [Require.js](http://requirejs.org/) 和 [Sea.js](http://seajs.org/) 等模块加载器协作使用。
+> xssFilter 是一个 XSS (Cross-Site Script) 过滤器模块，提供了友好，可靠的 XSS 过滤 API，支持在 Node.js 和浏览器中使用。
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
@@ -55,8 +55,6 @@ $ bower install xssFilter
 # 使用
 
 ### Node.js
-
-example.js
 
 ```js
 var xssFilter = require('xssfilter');
@@ -187,7 +185,7 @@ var output = xssfilter.filter('some html...');
 
 对于二级配置比如 `blackList_attrs`，第二个参数必须是一个 `{}` 对象
 
-比如下面这段代码作用是，不对`onsubmit`属性进行过滤
+比如下面这段代码作用是，不对 `onsubmit` 属性进行过滤
 
 ```js
 var xssfilter = new xssFilter();

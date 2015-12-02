@@ -1,5 +1,5 @@
 # xssFilter
-> xssFilter is an XSS(Cross-Site Script) filter for Javascript and Node.js. It also work with [Require.js](http://requirejs.org/) and [Sea.js](http://seajs.org/). easy to use.
+> xssFilter is a XSS (Cross-Site Script) Filter for Node.js & the browser, provides friendly, reliable XSS filter API for you.
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 
@@ -57,8 +57,6 @@ Result：
 # Usage
 
 ### Node.js
-
-example.js
 
 ```js
 var xssFilter = require('xssfilter');
