@@ -1,7 +1,7 @@
 {
   "name": "xssfilter",
   "version": "0.5.0",
-  "description": "A XSS Filter For Javascript",
+  "description": "XSS (Cross-Site Script) Filter for Node.js & the browser",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
@@ -15,7 +15,8 @@
     "url": "https://github.com/superRaytin/xssFilter"
   },
   "keywords": [
-    "xssFilter",
+    "xssfilter",
+    "xss filter",
     "xss"
   ],
   "author": "Leon Shi",
