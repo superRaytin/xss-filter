@@ -27,9 +27,64 @@ $ npm install xssfilter
 $ bower install xssFilter
 ```
 
-# Example
+# Usage
 
-Test HTML Content:
+### Node.js
+
+```js
+var xssFilter = require('xssfilter');
+var xssfilter = new xssFilter();
+
+var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+// output: <div class="like">something...</div>
+```
+
+### Browser
+
+```js
+<script src="./dist/xssFilter.js"></script>
+<script>
+    var xssfilter = new xssFilter();
+    var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+    // output: <div class="like">something...</div>
+</script>
+```
+
+#### Use with [require.js](http://requirejs.org/)
+
+```js
+<script src="require.js"></script>
+<script>
+    define(function() {
+        var xssFilter = require('./dist/xssFilter.js');
+        var xssfilter = new xssFilter();
+
+        var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+        // output: <div class="like">something...</div>
+    });
+</script>
+```
+
+#### Use with [sea.js](http://seajs.org/)
+
+```js
+<script src="sea.js"></script>
+<script>
+    seajs.use('./dist/xssFilter.js', function(xssFilter){
+        var xssfilter = new xssFilter();
+
+        // "<" to &lt; ">" to &gt;
+        xssfilter.options('escape', true);
+
+        var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
+        // output: &lt;div class="like"&gt;something...&lt;/div&gt;
+    })
+</script>
+```
+
+# Intuitive
+
+Test HTML content:
 
 ```html
 <div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
@@ -52,64 +107,6 @@ Result：
 	<div class="desc">desc</div>
 	<div>just a div</div>
 </div>
-```
-
-# Usage
-
-### Node.js
-
-```js
-var xssFilter = require('xssfilter');
-var xssfilter = new xssFilter();
-
-// "<" to &lt; ">" to &gt;
-xssfilter.options('escape', true);
-
-var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
-// output: &lt;div class="like"&gt;something...&lt;/div&gt;
-```
-
-### Browser
-
-```js
-<script src="./dist/xssFilter.js"></script>
-<script>
-    var xssfilter = new xssFilter();
-    var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedown="mousedown()">something...</div>');
-    // output: <div class="like">something...</div>
-</script>
-```
-
-#### Use with require.js
-
-```js
-<script src="require.js"></script>
-<script>
-    var xssFilter = require('./dist/xssFilter.js');
-    var xssfilter = new xssFilter();
-    var output = xssfilter.filter('some HTML content include XSS code');
-    // ...
-</script>
-```
-
-#### Use with sea.js
-
-```js
-<script src="sea.js"></script>
-<script>
-    /*
-    seajs.config({
-        alias: {
-            'xssFilter': './dist/xssFilter.js'
-        }
-    });
-    */
-    seajs.use('./dist/xssFilter.js', function(xssFilter){
-        var xssfilter = new xssFilter();
-        var output = xssfilter.filter('some HTML content include XSS code');
-        // ...
-    })
-</script>
 ```
 
 # API
