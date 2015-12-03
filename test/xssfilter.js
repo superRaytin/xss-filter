@@ -10,9 +10,13 @@ var defaultMultiLineScript = '<script>\n' +
     'alert(88)\n' +
     '</script>';
 var defaultStyle = '<style type="text">.red{color: #f00}</style>';
+var defaultStyleEscaped = '&lt;style type="text"&gt;.red{color: #f00}&lt;/style&gt;';
 var defaultMultiLineStyle = '<style type="text">\n' +
     '.red{color: #f00}\n' +
     '</style>';
+var defaultMultiLineStyleEscaped = '&lt;style type="text"&gt;\n' +
+    '.red{color: #f00}\n' +
+    '&lt;/style&gt;';
 var div1 = '<div class="title" title="I am a title!" value = "big">title</div>';
 var div2 = '<div class="desc" onsubmit="load()">desc</div>';
 
@@ -27,6 +31,7 @@ describe('filter', function() {
       onmousedown: false
     });
     xssfilter.filter('<div class="like"     ondblclick= "ondblclick(); return false;"       onmousedown  ="mousedown()"    >something...</div>').should.equal('<div class="like" onmousedown="mousedown()">something...</div>');
+    xssfilter.filter('<div class="like"     ondblclick= "ondblclick(); return false;"       onmousedown  ="mousedown()" data-title="onmousedown=mousedown()"    >something...</div>').should.equal('<div class="like" onmousedown="mousedown()" data-title="onmousedown=mousedown()">something...</div>');
   });
 
   it('should options() work', function() {
@@ -72,12 +77,21 @@ describe('filter', function() {
 
   it('should cleanTag work', function() {
     var xssfilter = new xssFilter();
-    xssfilter.options('cleanTag', false);
-    xssfilter.filter(defaultHTML).should.equal('<div class="like"    >something...</div>');
-
-    xssfilter.options('cleanTag', true);
     xssfilter.filter(defaultHTML).should.equal('<div class="like">something...</div>');
     xssfilter.filter('<div    class="like"     ondblclick= "ondblclick();      return false;"     onmousedown    =           "mousedown();     alert(8888)" aaa bbb   >something...</div>').should.equal('<div class="like" aaa bbb>something...</div>');
+  });
+
+  it('should removeMatchedTag work', function() {
+    var xssfilter = new xssFilter();
+    var html = htmlHead + text + defaultStyle + htmlFoot;
+    xssfilter.filter(html).should.equal('<div class="like">something...</div>');
+
+    xssfilter.options('removeMatchedTag', false);
+    xssfilter.filter(html).should.equal('<div class="like">something...'+ defaultStyleEscaped +'</div>');
+
+    var html2 = htmlHead + text + defaultMultiLineStyle + htmlFoot;
+    xssfilter.options('removeMatchedTag', false);
+    xssfilter.filter(html2).should.equal('<div class="like">something...'+ defaultMultiLineStyleEscaped +'</div>');
   });
 
   it('should matchStyleTag work', function() {
