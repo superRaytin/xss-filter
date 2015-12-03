@@ -141,7 +141,7 @@ var xssfilter = new xssFilter({
 
 结果:
 
-```
+```html
 <div class="like">
 	&lt;style type="text"&gt;
 		.red{color: #f00}
