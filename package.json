@@ -1,6 +1,6 @@
 {
   "name": "xssfilter",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "XSS (Cross-Site Script) Filter for Node.js & the browser",
   "main": "lib/index.js",
   "directories": {
