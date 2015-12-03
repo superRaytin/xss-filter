@@ -9,7 +9,7 @@
 [downloads-image]: http://img.shields.io/npm/dm/xssfilter.svg
 [npm-image]: http://img.shields.io/npm/v/xssfilter.svg
 
-[API 文档](#api)
+[API 文档](#matchstyletag)
 
 # 安装
 
@@ -100,22 +100,35 @@ var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedo
 处理之后：
 
 ```html
-<div class ="like">
-	<div class="title" title="I am a title!" value = "big">title</div>
+<div class="like">
+	<div class="title" title="I am a title!" value="big">title</div>
 	<div class="desc">desc</div>
 	<div>just a div</div>
 </div>
 ```
 
-# API
-## 配置选项
+# 配置选项
 
-```js
-label_style: true,
-label_script: true,
-escape: false,
-beautifyTags: true,
-blackList_attrs: {
+### matchStyleTag
+
+是否匹配 `style` 标签，将会把匹配到的 `style` 标签删除
+
+### matchScriptTag
+
+是否匹配 `script` 标签，将会把匹配到的 `script` 标签删除
+
+### removeMatchedTag
+
+是否要删除匹配到的标签，默认删除，如果设置为 false，则对标签进行转义
+
+### blackListAttrs
+
+标签属性黑名单列表，在这个列表中的属性将被清除
+
+blackListAttrs 的初始值列表：
+
+```
+{
     onclick: true,
     ondblclick: true,
     onchange: true,
@@ -138,40 +151,41 @@ blackList_attrs: {
 }
 ```
 
-- `label_style` - 是否过滤style标签
-- `label_script` - 是否过滤script标签
-- `escape` - 是否对标签进行转义, `"<" to "&lt;", ">" to "&gt;"`，默认不转义
-- `beautifyTags` - 是否美化标签, eg: `"<div    >" to "<div>"`
-- `blackList_attrs` - 属性黑名单, 在此名单上的属性将被清除
+### escape
 
-## 初始化
-最多支持一个参数，传进对象字面量，覆盖默认配置，`options` 可选
+是否对整个字符串进行转义，默认不转义
+
+# 初始化
+
+创建一个 `xssFilter` 实例：
 
 ```js
 var xssfilter = new xssFilter(options);
 ```
 
-## 方法
+构造函数方法中的 `options` 参数是可选的，传入需要的自定义配置，可以覆盖默认的配置选项。
+
+# 实例方法
 
 ### filter
-过滤方法，仅接受一个参数
+过滤目标字符串的方法，仅接受一个参数
 
 ### options
 
-配置除了可以在初始化时传入参数来修改，也可以使用提供的 `options` 方法：
+配置选项除了可以在初始化时传入参数指定，也可以使用 `options` 方法来修改：
 
 ```js
 var xssfilter = new xssFilter();
 
 xssfilter.options({
     escape: true,
-    label_style: false
+    matchStyleTag: false
 });
 
 var output = xssfilter.filter('some html...');
 ```
 
-也可以针对单个进行配置，下面这段代码输出的 HTML 中标签将会被转义
+当然也可以配置单个选项，下面这段代码输出的 HTML 中的标签将会被转义
 
 ```js
 var xssfilter = new xssFilter();
@@ -179,18 +193,17 @@ xssfilter.options('escape', true);
 var output = xssfilter.filter('some html...');
 ```
 
-对于二级配置比如 `blackList_attrs`，第二个参数必须是一个 `{}` 对象
-
-比如下面这段代码作用是，不对 `onsubmit` 属性进行过滤
+对于二级配置比如 `blackListAttrs`，第二个参数则必须是一个 `{}` 对象：
 
 ```js
 var xssfilter = new xssFilter();
 
-xssfilter.options('blackList_attrs', {
+xssfilter.options('blackListAttrs', {
     onsubmit: false
 });
 
-var output = xssfilter.filter('some html...');
+var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onmousedown="mousedown()">something...</div>');
+// output: <div class="like" onmousedown="mousedown()">something...</div>
 ```
 
 # License

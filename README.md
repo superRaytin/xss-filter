@@ -11,7 +11,7 @@
 
 [中文](https://github.com/superRaytin/xssFilter/blob/master/README-CN.md)
 
-[API Documentation](#api)
+[API Documentation](#manifest)
 
 # Install
 
@@ -102,22 +102,35 @@ Test HTML content:
 Result：
 
 ```html
-<div class ="like">
-	<div class="title" title="I am a title!" value = "big">title</div>
+<div class="like">
+	<div class="title" title="I am a title!" value="big">title</div>
 	<div class="desc">desc</div>
 	<div>just a div</div>
 </div>
 ```
 
-# API
-## Manifest
+# Manifest
 
-```js
-label_style: true,
-label_script: true,
-escape: false,
-beautifyTags: true,
-blackList_attrs: {
+### matchStyleTag
+
+whether match `style` tag，will remove matched `style` tags.
+
+### matchScriptTag
+
+whether match `script` tag，will remove matched `script` tags.
+
+### removeMatchedTag
+
+remove matched tag, if false, escape instead.
+
+### blackListAttrs
+
+attributes blacklist, attributes in this list will be cleared.
+
+initial blacklist of attributes：
+
+```
+{
     onclick: true,
     ondblclick: true,
     onchange: true,
@@ -140,40 +153,39 @@ blackList_attrs: {
 }
 ```
 
-- `label_style` - filter style tags
-- `label_script` - filter script tags
-- `escape` - escape tags, `"<" to "&lt;", ">" to "&gt;"`, default no
-- `beautifyTags` -beautify tags, eg: `"<div    >" to "<div>"`
-- `blackList_attrs` - Property blacklist, Properties in this list will be cleared
+### escape
 
-## Initialization
-Accepts only one parameter, `options` is optional, if provided, `options` will override the default configuration.
+escape tags of whole html string, `"<" to "&lt;", ">" to "&gt;"`, default no.
+
+
+# Initialization
+The configuration options can be specified by passing an `options` parameter in the initialization. `options` is optional, provided to override the default configuration.
 
 ```js
 var xssfilter = new xssFilter(options);
 ```
 
-## Methods
+# Instance methods
 
 ### filter
-Filtration method, accepts only one parameter.
+Filtering target string, accepts only one parameter.
 
 ### options
 
-It's not necessary to provide an configuration object for initialization, Another approach is use the `options` method:
+Use this method to modify the configuration options after initialization.
 
 ```js
 var xssfilter = new xssFilter();
 
 xssfilter.options({
     escape: true,
-    label_style: false
+    matchStyleTag: false
 });
 
 var output = xssfilter.filter('some html...');
 ```
 
-You can also modify the single configuration:
+You can also configure single option:
 
 ```js
 var xssfilter = new xssFilter();
@@ -181,18 +193,17 @@ xssfilter.options('escape', true);
 var output = xssfilter.filter('some html...');
 ```
 
-the second argument must be an object `{}` such as `blackList_attrs`
-
-For example, I dont want to filter the 'onsubmit' property, wrote like this:
+when set secondary attributes like `blackListAttrs`, the second argument must be an object `{}`:
 
 ```js
 var xssfilter = new xssFilter();
 
-xssfilter.options('blackList_attrs', {
+xssfilter.options('blackListAttrs', {
     onsubmit: false
 });
 
-var output = xssfilter.filter('some html...');
+var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onmousedown="mousedown()">something...</div>');
+// output: <div class="like" onmousedown="mousedown()">something...</div>
 ```
 
 # License
