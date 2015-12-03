@@ -1,3 +1,7 @@
+## 0.5.2
+
+- Support using in browser
+
 ## 0.5.1
 
 - Add test cases
