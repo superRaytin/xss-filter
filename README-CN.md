@@ -121,13 +121,43 @@ var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedo
 
 是否要删除匹配到的标签，默认删除，如果设置为 false，则对标签进行转义
 
+`removeMatchedTag` 需要与 `matchStyleTag`、`matchScriptTag` 配合使用，比如:
+
+```js
+var xssfilter = new xssFilter({
+    removeMatchedTag: false
+});
+```
+
+```html
+<div class ="like" onmousedown="mousedown()">
+	<style type="text">
+		.red{color: #f00}
+	</style>
+	something...
+</div>
+<script>alert(88)</script>
+```
+
+结果:
+
+```
+<div class="like">
+	&lt;style type="text"&gt;
+		.red{color: #f00}
+	&lt;/style&gt;
+	something...
+</div>
+&lt;script&gt;alert(88)&lt;/script&gt;
+```
+
 ### blackListAttrs
 
 标签属性黑名单列表，在这个列表中的属性将被清除
 
 blackListAttrs 的初始值列表：
 
-```
+```js
 {
     onclick: true,
     ondblclick: true,

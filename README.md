@@ -121,7 +121,37 @@ whether match `script` tag，will remove matched `script` tags.
 
 ### removeMatchedTag
 
-remove matched tag, if false, escape instead.
+whether remove matched tag, if set to false, escape instead.
+
+`removeMatchedTag` work with `matchStyleTag` and `matchScriptTag`，for example:
+
+```js
+var xssfilter = new xssFilter({
+    removeMatchedTag: false
+});
+```
+
+```html
+<div class ="like" onmousedown="mousedown()">
+	<style type="text">
+		.red{color: #f00}
+	</style>
+	something...
+</div>
+<script>alert(88)</script>
+```
+
+result:
+
+```
+<div class="like">
+	&lt;style type="text"&gt;
+		.red{color: #f00}
+	&lt;/style&gt;
+	something...
+</div>
+&lt;script&gt;alert(88)&lt;/script&gt;
+```
 
 ### blackListAttrs
 
@@ -129,7 +159,7 @@ attributes blacklist, attributes in this list will be cleared.
 
 initial blacklist of attributes：
 
-```
+```js
 {
     onclick: true,
     ondblclick: true,
