@@ -113,15 +113,15 @@ var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedo
 
 ### matchStyleTag
 
-是否匹配 `style` 标签，将会把匹配到的 `style` 标签删除
+是否匹配 `style` 标签，默认会把匹配到的 `style` 标签删除，设置为 `false` 阻止删除
 
 ### matchScriptTag
 
-是否匹配 `script` 标签，将会把匹配到的 `script` 标签删除
+是否匹配 `script` 标签，默认会把匹配到的 `script` 标签删除，设置为 `false` 阻止删除
 
 ### removeMatchedTag
 
-是否要删除匹配到的标签，默认删除，如果设置为 false，则对标签进行转义
+是否要删除匹配到的标签，默认删除，如果设置为 `false`，则对标签进行转义
 
 `removeMatchedTag` 需要与 `matchStyleTag`、`matchScriptTag` 配合使用，比如:
 

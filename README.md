@@ -115,17 +115,17 @@ Result：
 
 ### matchStyleTag
 
-whether match `style` tag，will remove matched `style` tags.
+whether match `style` tag, default is `true`. Set to `false` to prevent remove the matched `style` tags.
 
 ### matchScriptTag
 
-whether match `script` tag，will remove matched `script` tags.
+whether match `script` tag, default is `true`. Set to `false` to prevent remove the matched `script` tags.
 
 ### removeMatchedTag
 
-whether remove matched tag, if set to false, escape instead.
+whether remove matched tag, default is `true`. Set to `false` to using escape instead of remove.
 
-`removeMatchedTag` work with `matchStyleTag` and `matchScriptTag`，for example:
+`removeMatchedTag` should be used with `matchStyleTag` and `matchScriptTag`, for example:
 
 ```js
 var xssfilter = new xssFilter({
