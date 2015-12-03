@@ -1,13 +1,15 @@
 # xssFilter
 > xssFilter 是一个 XSS (Cross-Site Script) 过滤器模块，提供了友好，可靠的 XSS 过滤 API，支持在 Node.js 和浏览器中使用。
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Bower version][bower-image]][bower-url]
 
 [![xssfilter](https://nodei.co/npm/xssfilter.png)](https://npmjs.org/package/xssfilter)
 
 [npm-url]: https://npmjs.org/package/xssfilter
 [downloads-image]: http://img.shields.io/npm/dm/xssfilter.svg
 [npm-image]: http://img.shields.io/npm/v/xssfilter.svg
+[bower-url]:http://badge.fury.io/bo/xssFilter
+[bower-image]: https://badge.fury.io/bo/xssFilter.svg
 
 [API 文档](#matchstyletag)
 

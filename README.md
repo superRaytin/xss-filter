@@ -1,13 +1,15 @@
 # xssFilter
 > xssFilter is a XSS (Cross-Site Script) Filter for Node.js & the browser, provides friendly, reliable XSS filter API for you.
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Bower version][bower-image]][bower-url]
 
 [![xssfilter](https://nodei.co/npm/xssfilter.png)](https://npmjs.org/package/xssfilter)
 
 [npm-url]: https://npmjs.org/package/xssfilter
 [downloads-image]: http://img.shields.io/npm/dm/xssfilter.svg
 [npm-image]: http://img.shields.io/npm/v/xssfilter.svg
+[bower-url]:http://badge.fury.io/bo/xssFilter
+[bower-image]: https://badge.fury.io/bo/xssFilter.svg
 
 [中文](https://github.com/superRaytin/xssFilter/blob/master/README-CN.md)
 
