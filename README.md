@@ -238,5 +238,11 @@ var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onmo
 // output: <div class="like" onmousedown="mousedown()">something...</div>
 ```
 
+# Test case
+
+```
+npm test
+```
+
 # License
 MIT, see the [LICENSE](https://github.com/superRaytin/xssFilter/blob/master/LICENSE) file for detail.
