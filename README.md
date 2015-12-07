@@ -86,7 +86,7 @@ var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedo
 
 # Intuitive
 
-Test HTML content:
+Test HTML:
 
 ```html
 <div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
@@ -101,7 +101,7 @@ Test HTML content:
 <script>alert(99)</script>
 ```
 
-Result：
+Result in：
 
 ```html
 <div class="like">
@@ -143,7 +143,7 @@ var xssfilter = new xssFilter({
 <script>alert(88)</script>
 ```
 
-result:
+Result in:
 
 ```html
 <div class="like">
