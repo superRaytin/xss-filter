@@ -244,5 +244,10 @@ var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onmo
 npm test
 ```
 
+# Other XSS prevention libraries
+
+- [https://github.com/leizongmin/js-xss](https://github.com/leizongmin/js-xss)
+- [https://github.com/yahoo/xss-filters](https://github.com/yahoo/xss-filters)
+
 # License
 MIT, see the [LICENSE](https://github.com/superRaytin/xssFilter/blob/master/LICENSE) file for detail.
