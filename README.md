@@ -1,5 +1,5 @@
-# xssFilter
-> xssFilter is a XSS (Cross-Site Script) Filter for Node.js & the browser, provides friendly, reliable XSS filter API for you.
+# xss-filter
+> xss-filter is a XSS (Cross-Site Script) Filter for Node.js & the browser, provides friendly, reliable XSS filter API for you.
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Bower version][bower-image]][bower-url]
 
@@ -15,19 +15,34 @@
 
 [API Documentation](#manifest)
 
-# Install
+Test HTML:
 
-### NPM
+```html
+<div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
+	<div class="title" title="I am a title!" value = "big">title</div>
+	<div class="desc" onsubmit="load()">desc</div>
+	<div>just a div</div>
+	<style type="text">
+		.red{color: #f00}
+	</style>
+	<script>alert(88)</script>
+</div>
+<script>alert(99)</script>
+```
 
-```
-$ npm install xssfilter
+Result in：
+
+```html
+<div class="like">
+	<div class="title" title="I am a title!" value="big">title</div>
+	<div class="desc">desc</div>
+	<div>just a div</div>
+</div>
 ```
 
-### Bower
+# Installation / Download
 
-```
-$ bower install xssFilter
-```
+`npm install xssfilter` or `bower install xssFilter` or just download [xssFilter.js](dist/xssFilter.js) from the git repo.
 
 # Usage
 
@@ -82,33 +97,6 @@ var output = xssfilter.filter('<div class="like" ondblclick="takeme()" onmousedo
         // output: &lt;div class="like"&gt;something...&lt;/div&gt;
     })
 </script>
-```
-
-# Intuitive
-
-Test HTML:
-
-```html
-<div class ="like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">
-	<div class="title" title="I am a title!" value = "big">title</div>
-	<div class="desc" onsubmit="load()">desc</div>
-	<div>just a div</div>
-	<style type="text">
-		.red{color: #f00}
-	</style>
-	<script>alert(88)</script>
-</div>
-<script>alert(99)</script>
-```
-
-Result in：
-
-```html
-<div class="like">
-	<div class="title" title="I am a title!" value="big">title</div>
-	<div class="desc">desc</div>
-	<div>just a div</div>
-</div>
 ```
 
 # Manifest
@@ -238,13 +226,13 @@ var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onmo
 // output: <div class="like" onmousedown="mousedown()">something...</div>
 ```
 
-# Test case
+# Testing
 
 ```
 npm test
 ```
 
-# Other XSS prevention libraries
+# Other xss filter view
 
 - [https://github.com/leizongmin/js-xss](https://github.com/leizongmin/js-xss)
 - [https://github.com/yahoo/xss-filters](https://github.com/yahoo/xss-filters)
