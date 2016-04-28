@@ -234,8 +234,8 @@ xssfilter.options('blackListAttrs', {
     onsubmit: false
 });
 
-var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onmousedown="mousedown()">something...</div>');
-// output: <div class="like" onmousedown="mousedown()">something...</div>
+var output = xssfilter.filter('<div class="like" ondblclick="ondblclick();" onsubmit="dosomething()">something...</div>');
+// output: <div class="like" onsubmit="dosomething()">something...</div>
 ```
 
 # Test case
