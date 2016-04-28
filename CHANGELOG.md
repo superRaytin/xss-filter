@@ -1,3 +1,7 @@
+## 0.5.3
+
+- Fix: attribute in black list should be case insensitive #1
+
 ## 0.5.2
 
 - Support using in browser
