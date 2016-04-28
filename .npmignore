@@ -1,0 +1,7 @@
+.idea/
+
+dist/
+example/
+test/
+Gruntfile.js
+bower.json
