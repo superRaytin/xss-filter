@@ -1,7 +1,10 @@
 # xss-filter
 > xss-filter is a XSS (Cross-Site Script) Filter for Node.js & the browser, provides friendly, reliable XSS filter API for you.
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Bower version][bower-image]][bower-url]
+[![Build Status](https://travis-ci.org/superRaytin/xss-filter.svg?branch=master)](https://travis-ci.org/superRaytin/xss-filter)
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][npm-url]
+[![Bower version][bower-image]][bower-url]
 
 [![xssfilter](https://nodei.co/npm/xssfilter.png)](https://npmjs.org/package/xssfilter)
 
