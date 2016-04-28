@@ -147,4 +147,9 @@ describe('filter', function() {
     xssfilter.filter('<div class = "like" ondblclick= "ondblclick(); return false;" onmousedown="mousedown()">something...</div>').should.equal('<div class="like">something...</div>');
     xssfilter.filter('<div class =  "like" ondblclick= "ondblclick();    return false;" onmousedown="mousedown()">something...</div>').should.equal('<div class="like">something...</div>');
   });
+
+  it('should work when attribute is uppercase', function() {
+    var xssfilter = new xssFilter();
+    xssfilter.filter('<div class ="like" onMouseOver= "dosomething(); return false;" onmousedown="mousedown()">something...</div>').should.equal('<div class="like">something...</div>');
+  });
 });
